@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+import sw from 'stopword';
 import ListControls from './ListControls';
 import TextArea from './TextArea';
+import './MainScreen.css';
 
 import WordList from './WordList';
-
-// function removeNonDictionaryWords(words) {}
 
 type WordObjectType = {
   word: string;
@@ -19,7 +19,29 @@ const compareSortFunction = (
   sortType: string,
   sortDirection: string
 ) => {
-  return -1;
+  const isLowToHighSort = sortDirection === 'asc';
+
+  if (sortType === 'alphabetical') {
+    const nameA = a.word.toUpperCase(); // ignore upper and lowercase
+    const nameB = b.word.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      if (isLowToHighSort) return -1;
+      return 1;
+    }
+    if (nameA > nameB) {
+      if (isLowToHighSort) return 1;
+      return -1;
+    }
+    // names must be equal
+    return 0;
+  }
+
+  const aValue: number = a.value;
+  const bValue: number = b.value;
+
+  if (isLowToHighSort) return Number(aValue) - Number(bValue);
+
+  return Number(bValue) - Number(aValue);
 };
 
 const MainScreen = () => {
@@ -27,69 +49,53 @@ const MainScreen = () => {
   const [sortType, setSortType] = useState('');
   const [sortDirection, setSortDirection] = useState('');
 
-  // const [removenonwords, setremovenonwords] = useState(false);
+  const [removeNonWords, setRemoveNonWords] = useState(false);
 
-  const words = textString.split(' ');
+  let words = textString.split(' ');
 
   const wordsArray: WordsArrayType = [];
 
+  if (removeNonWords) words = sw.removeStopwords(words);
+
   for (let i = 0; i < words.length; i += 1) {
     const word = words[i];
-    const indexOfWord = wordsArray.findIndex(
-      (wordObject) => wordObject.word === word
-    );
-
-    console.log(indexOfWord, 'indexOfWord');
-    if (indexOfWord === -1) {
-      wordsArray.push({
-        word,
-        value: 1,
-      });
-    } else {
-      let { value } = wordsArray[indexOfWord];
-      value += 1;
-      wordsArray[indexOfWord] = { word, value };
+    if (word) {
+      const indexOfWord = wordsArray.findIndex(
+        (wordObject) => wordObject.word === word
+      );
+      if (indexOfWord === -1) {
+        wordsArray.push({
+          word,
+          value: 1,
+        });
+      } else {
+        let { value } = wordsArray[indexOfWord];
+        value += 1;
+        wordsArray[indexOfWord] = { word, value };
+      }
     }
   }
 
   // loop through words array and create object
 
-  // if (removenonwords) words = removeNonDictionaryWords(words);
-
-  // if (alphabeticalSort)
-  // if (numericalSort)
-
   if (sortType) {
-    if (sortType === 'alphabetical') {
-      // words.sort(compareSortFunction);
-      wordsArray.sort((a, b) => {
-        const nameA = a.word.toUpperCase(); // ignore upper and lowercase
-        const nameB = b.word.toUpperCase(); // ignore upper and lowercase
-
-        return compareSortFunction(a, b, sortType, sortDirection);
-
-        if (nameA < nameB) {
-          return -1;
-        }
-        if (nameA > nameB) {
-          return 1;
-        }
-
-        // names must be equal
-        return 0;
-      });
-    }
+    wordsArray.sort((a, b) => {
+      return compareSortFunction(a, b, sortType, sortDirection);
+    });
   }
 
   return (
-    <div>
+    <div className="main-screen">
       <TextArea textString={textString} settextString={settextString} />
       <ListControls
         sortType={sortType}
         setSortType={setSortType}
         sortDirection={sortDirection}
         setSortDirection={setSortDirection}
+        removeNonWords={removeNonWords}
+        setRemoveNonWords={setRemoveNonWords}
       />
+
       <WordList words={wordsArray} />
     </div>
   );

@@ -1,0 +1,12 @@
+.word-list {
+  max-height: 600px;
+  overflow: auto;
+  margin-top: 8px;
+}
+
+.word-list-row {
+  background-color: grey;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}

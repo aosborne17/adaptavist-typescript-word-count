@@ -15,7 +15,8 @@
 - [x] Write test that checks dom for a text field
 - [] Implement component for text field
 - [] Write test
-
+- [] style word list
+- [] add animation to word list on interaction
 - [] Document how to access application
-- [] Add a feature to remove non dictionary words, can be a toggle button
+- [x] Add a feature to remove stopwords, can be a toggle button
 - [] store word list in cache

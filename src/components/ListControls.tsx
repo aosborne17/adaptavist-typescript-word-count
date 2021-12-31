@@ -1,12 +1,15 @@
 import React from 'react';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
+import './ListControls.css';
 
 interface ListControlsProps {
   sortType: string;
   setSortType: React.Dispatch<React.SetStateAction<string>>;
   sortDirection: string;
   setSortDirection: React.Dispatch<React.SetStateAction<string>>;
+  removeNonWords: boolean;
+  setRemoveNonWords: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function handleSorting(
@@ -18,7 +21,10 @@ function handleSorting(
 ) {
   if (sortType === newType) {
     if (sortDirection === 'asc') setSortDirection('desc');
-    if (sortDirection === 'desc') setSortDirection('');
+    if (sortDirection === 'desc') {
+      setSortDirection('');
+      setSortType('');
+    }
     if (sortDirection === '') setSortDirection('asc');
   } else {
     setSortType(newType);
@@ -37,14 +43,14 @@ const ListControls = ({
   setSortType,
   sortDirection,
   setSortDirection,
+  removeNonWords,
+  setRemoveNonWords,
 }: ListControlsProps) => {
-  console.log(sortType);
-  console.log(sortDirection);
-
   return (
-    <div>
-      <div>
+    <div className="list-controls">
+      <div className="list-controls-button-container">
         <button
+          className="btn"
           type="button"
           onClick={() =>
             handleSorting(
@@ -61,8 +67,9 @@ const ListControls = ({
         {sortType === 'alphabetical' && renderSortIcon(sortDirection)}
       </div>
 
-      <div>
+      <div className="list-controls-button-container">
         <button
+          className="btn btn-white"
           type="button"
           onClick={() =>
             handleSorting(
@@ -77,6 +84,15 @@ const ListControls = ({
           Sort Numerically
         </button>
         {sortType === 'numerical' && renderSortIcon(sortDirection)}
+      </div>
+      <div className="list-controls-button-container">
+        <button
+          className="btn btn-white"
+          type="button"
+          onClick={() => setRemoveNonWords(!removeNonWords)}
+        >
+          {removeNonWords ? 'Show Stopwords' : 'Hide  Stopwords'}
+        </button>
       </div>
     </div>
   );

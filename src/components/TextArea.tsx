@@ -9,7 +9,7 @@ interface TextAreaProps {
 const TextArea = ({ textString, settextString }: TextAreaProps) => {
   return (
     <TextField
-      id="outlined-multiline-flexible"
+      style={{ width: '100%' }}
       multiline
       placeholder="Add your words"
       value={textString}

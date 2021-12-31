@@ -3,7 +3,7 @@ import MainScreen from './components/MainScreen';
 
 const App = () => {
   return (
-    <div>
+    <div className="app">
       <MainScreen />
     </div>
   );

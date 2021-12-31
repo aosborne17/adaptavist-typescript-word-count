@@ -1,0 +1,8 @@
+.main-screen {
+  width: 600px;
+}
+
+
+.text-controls-container {
+  display: flex;
+}
