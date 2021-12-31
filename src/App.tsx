@@ -1,18 +1,10 @@
-import { TextField } from '@mui/material';
 import './App.css';
+import MainScreen from './components/MainScreen';
 
 const App = () => {
   return (
     <div>
-      hi
-      <TextField
-        id="outlined-multiline-flexible"
-        multiline
-        placeholder="Add your words"
-        // maxRows={4}
-        // value={value}
-        // onChange={handleChange}
-      />
+      <MainScreen />
     </div>
   );
 };
