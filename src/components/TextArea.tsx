@@ -11,7 +11,7 @@ const TextArea = ({ textString, settextString }: TextAreaProps) => {
     <TextField
       style={{ width: '100%' }}
       multiline
-      placeholder="Add your words"
+      placeholder="Start typing..."
       value={textString}
       onChange={(e) => settextString(e.target.value)}
     />

@@ -1,9 +1,18 @@
 .app {
+  margin-top: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
+.glassmorphic-card {
+  background: rgba( 255, 255, 255, 0.5 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 18px );
+-webkit-backdrop-filter: blur( 18px );
+border-radius: 10px;
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+}
 
 .btn {
   padding: 10px;
@@ -22,5 +31,5 @@
 
 .btn:hover {
   cursor: pointer;
-  transform: scale(1.1);
+  transform: scale(1.05);
 }

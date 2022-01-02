@@ -1,12 +1,28 @@
 .word-list {
-  max-height: 600px;
+  max-height: 450px;
   overflow: auto;
   margin-top: 8px;
 }
 
 .word-list-row {
-  background-color: grey;
+  /* background-color: grey; */
   display: flex;
   justify-content: space-between;
   padding: 10px;
+  transition: 1s height;
+
 }
+
+.fade-in {
+  animation: fadeInAnimation 1.5s linear;
+}
+
+@keyframes fadeInAnimation {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+

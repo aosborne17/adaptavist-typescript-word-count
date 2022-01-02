@@ -1,4 +1,6 @@
-import { WordsArrayType } from './MainScreen';
+import { Card } from '@mui/material';
+import { motion } from 'framer-motion';
+import { WordsArrayType } from '../types';
 import './WordList.css';
 
 interface WordListProps {
@@ -10,10 +12,12 @@ const WordList = ({ words }: WordListProps) => {
   return (
     <div className="word-list">
       {words.map(({ word, value }) => (
-        <div className="word-list-row">
-          <p>{word}</p>
-          <p>{value}</p>
-        </div>
+        <motion.div layout>
+          <Card className="word-list-row fade-in">
+            <p>{word}</p>
+            <p>{value}</p>
+          </Card>
+        </motion.div>
       ))}
     </div>
   );

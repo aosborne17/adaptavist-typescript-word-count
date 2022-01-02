@@ -5,44 +5,8 @@ import TextArea from './TextArea';
 import './MainScreen.css';
 
 import WordList from './WordList';
-
-type WordObjectType = {
-  word: string;
-  value: number;
-};
-
-export type WordsArrayType = WordObjectType[];
-
-const compareSortFunction = (
-  a: WordObjectType,
-  b: WordObjectType,
-  sortType: string,
-  sortDirection: string
-) => {
-  const isLowToHighSort = sortDirection === 'asc';
-
-  if (sortType === 'alphabetical') {
-    const nameA = a.word.toUpperCase(); // ignore upper and lowercase
-    const nameB = b.word.toUpperCase(); // ignore upper and lowercase
-    if (nameA < nameB) {
-      if (isLowToHighSort) return -1;
-      return 1;
-    }
-    if (nameA > nameB) {
-      if (isLowToHighSort) return 1;
-      return -1;
-    }
-    // names must be equal
-    return 0;
-  }
-
-  const aValue: number = a.value;
-  const bValue: number = b.value;
-
-  if (isLowToHighSort) return Number(aValue) - Number(bValue);
-
-  return Number(bValue) - Number(aValue);
-};
+import { WordsArrayType } from '../types';
+import compareSortFunction from '../utils';
 
 const MainScreen = () => {
   const [textString, settextString] = useState('');
@@ -96,7 +60,19 @@ const MainScreen = () => {
         setRemoveNonWords={setRemoveNonWords}
       />
 
-      <WordList words={wordsArray} />
+      {!wordsArray.length ? (
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            marginTop: '30px',
+          }}
+        >
+          <p>Start typing in the textbox to generate your word list</p>
+        </div>
+      ) : (
+        <WordList words={wordsArray} />
+      )}
     </div>
   );
 };

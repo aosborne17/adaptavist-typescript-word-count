@@ -1,5 +1,6 @@
 .list-controls {
   display: flex;
+  justify-content: space-between;
   margin: 10px 0;
 }
 
@@ -7,11 +8,6 @@
 .list-controls-button-container {
   display: flex;
   align-items: center;
-}
-
-
-.list-controls div:first-child {
-  margin-right: 30px;
 }
 
 

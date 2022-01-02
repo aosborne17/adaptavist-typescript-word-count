@@ -2,6 +2,7 @@ import React from 'react';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 import ArrowCircleDownIcon from '@mui/icons-material/ArrowCircleDown';
 import './ListControls.css';
+import { Button } from '@mui/material';
 
 interface ListControlsProps {
   sortType: string;
@@ -48,52 +49,49 @@ const ListControls = ({
 }: ListControlsProps) => {
   return (
     <div className="list-controls">
-      <div className="list-controls-button-container">
-        <button
-          className="btn"
-          type="button"
-          onClick={() =>
-            handleSorting(
-              sortType,
-              setSortType,
-              sortDirection,
-              setSortDirection,
-              'alphabetical'
-            )
-          }
-        >
-          Sort Alphabetically
-        </button>
-        {sortType === 'alphabetical' && renderSortIcon(sortDirection)}
-      </div>
+      <Button
+        endIcon={sortType === 'alphabetical' && renderSortIcon(sortDirection)}
+        variant="contained"
+        className="btn"
+        type="button"
+        onClick={() =>
+          handleSorting(
+            sortType,
+            setSortType,
+            sortDirection,
+            setSortDirection,
+            'alphabetical'
+          )
+        }
+      >
+        Sort Alphabetically
+      </Button>
 
-      <div className="list-controls-button-container">
-        <button
-          className="btn btn-white"
-          type="button"
-          onClick={() =>
-            handleSorting(
-              sortType,
-              setSortType,
-              sortDirection,
-              setSortDirection,
-              'numerical'
-            )
-          }
-        >
-          Sort Numerically
-        </button>
-        {sortType === 'numerical' && renderSortIcon(sortDirection)}
-      </div>
-      <div className="list-controls-button-container">
-        <button
-          className="btn btn-white"
-          type="button"
-          onClick={() => setRemoveNonWords(!removeNonWords)}
-        >
-          {removeNonWords ? 'Show Stopwords' : 'Hide  Stopwords'}
-        </button>
-      </div>
+      <Button
+        variant="contained"
+        endIcon={sortType === 'numerical' && renderSortIcon(sortDirection)}
+        className="btn btn-white"
+        type="button"
+        onClick={() =>
+          handleSorting(
+            sortType,
+            setSortType,
+            sortDirection,
+            setSortDirection,
+            'numerical'
+          )
+        }
+      >
+        Sort Numerically
+      </Button>
+      <Button
+        variant="contained"
+        className="btn btn-white"
+        type="button"
+        onClick={() => setRemoveNonWords(!removeNonWords)}
+      >
+        {removeNonWords ? 'Show Stopwords' : 'Hide  Stopwords'}
+      </Button>
     </div>
   );
 };
