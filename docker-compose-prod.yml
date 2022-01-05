@@ -1,0 +1,11 @@
+version: '3.4'
+
+services:
+  client:
+    # we are specifying the path from where to build are container from
+    build:
+      context: ./
+      dockerfile: Dockerfile.prod
+    restart: always
+    # the container will be running from port 3000
+    ports: [3000:3000]

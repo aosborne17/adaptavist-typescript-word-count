@@ -3,47 +3,21 @@ import sw from 'stopword';
 import ListControls from './ListControls';
 import TextArea from './TextArea';
 import './MainScreen.css';
-
 import WordList from './WordList';
-import { WordsArrayType } from '../types';
-import compareSortFunction from '../utils';
+import { compareSortFunction, getScoreForWords } from '../utils';
 
 const MainScreen = () => {
   const [textString, settextString] = useState('');
   const [sortType, setSortType] = useState('');
   const [sortDirection, setSortDirection] = useState('');
-
   const [removeNonWords, setRemoveNonWords] = useState(false);
 
-  let words = textString.split(' ');
-
-  const wordsArray: WordsArrayType = [];
-
-  if (removeNonWords) words = sw.removeStopwords(words);
-
-  for (let i = 0; i < words.length; i += 1) {
-    const word = words[i];
-    if (word) {
-      const indexOfWord = wordsArray.findIndex(
-        (wordObject) => wordObject.word === word
-      );
-      if (indexOfWord === -1) {
-        wordsArray.push({
-          word,
-          value: 1,
-        });
-      } else {
-        let { value } = wordsArray[indexOfWord];
-        value += 1;
-        wordsArray[indexOfWord] = { word, value };
-      }
-    }
-  }
-
-  // loop through words array and create object
+  let wordsFromText = textString.split(' ');
+  if (removeNonWords) wordsFromText = sw.removeStopwords(wordsFromText);
+  const words = getScoreForWords(wordsFromText);
 
   if (sortType) {
-    wordsArray.sort((a, b) => {
+    words.sort((a, b) => {
       return compareSortFunction(a, b, sortType, sortDirection);
     });
   }
@@ -60,7 +34,7 @@ const MainScreen = () => {
         setRemoveNonWords={setRemoveNonWords}
       />
 
-      {!wordsArray.length ? (
+      {!words.length ? (
         <div
           style={{
             display: 'flex',
@@ -71,7 +45,7 @@ const MainScreen = () => {
           <p>Start typing in the textbox to generate your word list</p>
         </div>
       ) : (
-        <WordList words={wordsArray} />
+        <WordList words={words} />
       )}
     </div>
   );

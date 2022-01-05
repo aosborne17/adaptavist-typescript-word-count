@@ -1,4 +1,4 @@
-import { WordObjectType } from './types';
+import { WordObjectType, WordsArrayType } from './types';
 
 const compareSortFunction = (
   a: WordObjectType,
@@ -31,4 +31,27 @@ const compareSortFunction = (
   return Number(bValue) - Number(aValue);
 };
 
-export default compareSortFunction;
+function getScoreForWords(words: string[]) {
+  const wordsArray: WordsArrayType = [];
+  for (let i = 0; i < words.length; i += 1) {
+    const word = words[i];
+    if (word) {
+      const indexOfWord = wordsArray.findIndex(
+        (wordObject) => wordObject.word === word
+      );
+      if (indexOfWord === -1) {
+        wordsArray.push({
+          word,
+          value: 1,
+        });
+      } else {
+        let { value } = wordsArray[indexOfWord];
+        value += 1;
+        wordsArray[indexOfWord] = { word, value };
+      }
+    }
+  }
+  return wordsArray;
+}
+
+export { compareSortFunction, getScoreForWords };

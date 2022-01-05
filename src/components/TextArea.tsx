@@ -9,6 +9,7 @@ interface TextAreaProps {
 const TextArea = ({ textString, settextString }: TextAreaProps) => {
   return (
     <TextField
+      inputProps={{ 'data-testid': 'text-area' }}
       style={{ width: '100%' }}
       multiline
       placeholder="Start typing..."

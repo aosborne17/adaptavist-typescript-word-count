@@ -1,11 +1,25 @@
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render } from '@testing-library/react';
 import TextArea from '../components/TextArea';
 
-/* global test, expect */
+/* global test, expect, jest */
 
-test('renders text field', () => {
-  render(<TextArea />);
+const setup = () => {
+  const settextString = jest.fn();
 
-  const textFieldElement = screen.getByPlaceholderText('Add your words');
-  expect(textFieldElement).toBeInTheDocument();
+  const utils = render(
+    <TextArea textString="" settextString={settextString} />
+  );
+
+  const textArea = utils.getByTestId('text-area');
+  return {
+    settextString,
+    textArea,
+    ...utils,
+  };
+};
+
+test('when typing into text area, state change function should be called', () => {
+  const { textArea, settextString } = setup();
+  fireEvent.change(textArea, { target: { value: 'hello' } });
+  expect(settextString).toHaveBeenCalled();
 });

@@ -1,5 +1,5 @@
 import { Card } from '@mui/material';
-import { motion } from 'framer-motion';
+import FlipMove from 'react-flip-move';
 import { WordsArrayType } from '../types';
 import './WordList.css';
 
@@ -8,17 +8,18 @@ interface WordListProps {
 }
 
 const WordList = ({ words }: WordListProps) => {
-  console.log(words, 'words');
   return (
     <div className="word-list">
-      {words.map(({ word, value }) => (
-        <motion.div layout>
-          <Card className="word-list-row fade-in">
-            <p>{word}</p>
-            <p>{value}</p>
-          </Card>
-        </motion.div>
-      ))}
+      <FlipMove>
+        {words.map(({ word, value }) => (
+          <div data-testid="word-list-row" key={word}>
+            <Card className="word-list-row">
+              <p>{word}</p>
+              <p className="value-text">{value}</p>
+            </Card>
+          </div>
+        ))}
+      </FlipMove>
     </div>
   );
 };
